@@ -1,0 +1,4 @@
+(?<=  <TextExpression\.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">).*
+(?=    <\/sco:Collection>
+  <\/TextExpression\.ReferencesForImplementation>)

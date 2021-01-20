@@ -1,0 +1,22 @@
+    <If Condition="[in_TransactionNumber &lt;= io_TransactionData.Rows.Count]" DisplayName="If more transactions are left" sap:VirtualizedContainerService.HintSize="568.8,209.6" sap2010:WorkflowViewState.IdRef="If_2">
+      <If.Then>
+        <Assign DisplayName="Assign out_TransactionItem" sap:VirtualizedContainerService.HintSize="262.4,60" sap2010:WorkflowViewState.IdRef="Assign_8">
+          <Assign.To>
+            <OutArgument x:TypeArguments="sd:DataRow">[out_TransactionItem]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="sd:DataRow">[io_TransactionData.Rows(in_TransactionNumber - 1)]</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+      <If.Else>
+        <Assign DisplayName="Assign out_TransactionItem" sap:VirtualizedContainerService.HintSize="262.4,60" sap2010:WorkflowViewState.IdRef="Assign_9">
+          <Assign.To>
+            <OutArgument x:TypeArguments="sd:DataRow">[out_TransactionItem]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="sd:DataRow">[Nothing]</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Else>
+    </If>

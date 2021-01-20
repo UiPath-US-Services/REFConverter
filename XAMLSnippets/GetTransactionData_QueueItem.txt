@@ -1,0 +1,7 @@
+    <ui:GetQueueItem ContinueOnError="{x:Null}" TimeoutMS="{x:Null}".* DisplayName="Get transaction item" sap:VirtualizedContainerService\.HintSize="484,234" sap2010:WorkflowViewState\.IdRef="GetQueueItem_1" QueueType="\[in_Config\(&quot;OrchestratorQueueName&quot;\)\.ToString]" TransactionItem="\[out_TransactionItem\]">
+      <sap:WorkflowViewStateService\.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True<\/x:Boolean>
+        <\/scg:Dictionary>
+      <\/sap:WorkflowViewStateService\.ViewState>
+    <\/ui:GetQueueItem>

@@ -1,0 +1,1 @@
+xmlns:str="clr-namespace:System.Text.RegularExpressions;assembly=System"

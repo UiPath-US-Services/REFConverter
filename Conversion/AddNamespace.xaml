@@ -1,0 +1,182 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="AddNamespace" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:str="clr-namespace:System.Text.RegularExpressions;assembly=System" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="io_xamlText" Type="InOutArgument(x:String)" />
+    <x:Property Name="in_dataType" Type="InArgument(x:String)" />
+    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1276.8,902.4</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>AddNamespace_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="25">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>System.Text.RegularExpressions</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="24">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Adds the namespace for the given data type to the xaml if needed&#xA;&#xA;Args: io_xamlText, in_dataType, in_Config" DisplayName="AddNamespace" sap:VirtualizedContainerService.HintSize="524.8,1832.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="dataTypeNamespace" />
+      <Variable x:TypeArguments="x:String" Name="existingNamespaces" />
+      <Variable x:TypeArguments="x:String" Name="namespaceRegex" />
+      <Variable x:TypeArguments="scg:IEnumerable(str:Match)" Name="namespaceMatches" />
+      <Variable x:TypeArguments="scg:IEnumerable(str:Match)" Name="assemblyMatches" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Assign DisplayName="Assign - existingNamespaces" sap:VirtualizedContainerService.HintSize="483.2,60" sap2010:WorkflowViewState.IdRef="Assign_2">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[existingNamespaces]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[io_xamlText.Split("&gt;"c)(0)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:ReadTextFile sap2010:Annotation.AnnotationText="Get XML namespace for given data type" Content="[dataTypeNamespace]" DisplayName="Read Text File - DataType namespace" FileName="[&quot;XAMLSnippets\Namespaces\&quot; + in_dataType + &quot;.txt&quot;]" sap:VirtualizedContainerService.HintSize="483.2,112" sap2010:WorkflowViewState.IdRef="ReadTextFile_2">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:ReadTextFile>
+    <If sap2010:Annotation.AnnotationText="If the XML namespace for the given data type is not already included, add it to the xaml" Condition="[Not existingNamespaces.Contains(dataTypeNamespace)]" DisplayName="If - XML namespace does not exist" sap:VirtualizedContainerService.HintSize="483.2,253.6" sap2010:WorkflowViewState.IdRef="If_1">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <Assign DisplayName="Assign - io_xamlText" sap:VirtualizedContainerService.HintSize="262.4,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:String">[io_xamlText]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:String">[io_xamlText.Replace(existingNamespaces, existingNamespaces + " " + dataTypeNamespace)]</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+    </If>
+    <ui:ReadTextFile sap2010:Annotation.AnnotationText="Get Regex pattern for imported namespaces in the XAML" Content="[namespaceRegex]" DisplayName="Read Text File - Namespace Regex" FileName="XAMLSnippets\NamespaceRegex.txt" sap:VirtualizedContainerService.HintSize="483.2,112" sap2010:WorkflowViewState.IdRef="ReadTextFile_3">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:ReadTextFile>
+    <ui:Matches sap2010:Annotation.AnnotationText="Get imported namespaces in the XAML (will be one match containing all namespaces)" DisplayName="Matches - .NET namespaces" sap:VirtualizedContainerService.HintSize="483.2,104" sap2010:WorkflowViewState.IdRef="Matches_1" Input="[io_xamlText]" IsBuilderTabModified="False" Pattern="[namespaceRegex]" RegexOption="IgnoreCase, Compiled, Singleline" Result="[namespaceMatches]">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:Matches>
+    <If sap2010:Annotation.AnnotationText="If the namespace for the data type does not already exist in the Imports for the XAML, add it" Condition="[Not namespaceMatches.First.Value.Contains(in_Config(in_dataType + &quot;Namespace&quot;).ToString)]" DisplayName="If - .NET namespace does not exist" sap:VirtualizedContainerService.HintSize="483.2,257.6" sap2010:WorkflowViewState.IdRef="If_2">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <Assign DisplayName="Assign - io_xamlText" sap:VirtualizedContainerService.HintSize="262.4,64" sap2010:WorkflowViewState.IdRef="Assign_3">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:String">[io_xamlText]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:String" xml:space="preserve">[io_xamlText.Replace(namespaceMatches.First.Value, namespaceMatches.First.Value + 
+"      &lt;x:String&gt;"+in_Config(in_dataType + "Namespace").ToString + "&lt;/x:String&gt;" +
+Environment.NewLine)]</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+    </If>
+    <ui:ReadTextFile sap2010:Annotation.AnnotationText="Get Regex pattern for assembly references in the XAML" Content="[namespaceRegex]" DisplayName="Read Text File - Assembly Regex" FileName="XAMLSnippets\AssemblyRegex.txt" sap:VirtualizedContainerService.HintSize="483.2,112" sap2010:WorkflowViewState.IdRef="ReadTextFile_4">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:ReadTextFile>
+    <ui:Matches sap2010:Annotation.AnnotationText="Get assembly references in the XAML (will be one match containing all assemblies)" DisplayName="Matches - .NET Assemblies" sap:VirtualizedContainerService.HintSize="483.2,104" sap2010:WorkflowViewState.IdRef="Matches_2" Input="[io_xamlText]" IsBuilderTabModified="False" Pattern="[namespaceRegex]" RegexOption="IgnoreCase, Compiled, Singleline" Result="[assemblyMatches]">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:Matches>
+    <If sap2010:Annotation.AnnotationText="If the assembly reference for the data type does not exist in the XAML, add it" Condition="[Not assemblyMatches.First.Value.Contains(in_Config(in_dataType + &quot;Assembly&quot;).ToString)]" DisplayName="If - .NET assembly does not exist" sap:VirtualizedContainerService.HintSize="483.2,244.8" sap2010:WorkflowViewState.IdRef="If_3">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <Assign DisplayName="Assign - io_xamlText" sap:VirtualizedContainerService.HintSize="262.4,64" sap2010:WorkflowViewState.IdRef="Assign_4">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:String">[io_xamlText]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:String" xml:space="preserve">[io_xamlText.Replace(assemblyMatches.First.Value, assemblyMatches.First.Value +
+"      &lt;AssemblyReference&gt;"+in_Config(in_dataType + "Namespace").ToString + "&lt;/AssemblyReference&gt;" +
+Environment.NewLine)]</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+    </If>
+  </Sequence>
+</Activity>

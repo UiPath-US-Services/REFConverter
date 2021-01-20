@@ -1,0 +1,4 @@
+(?<=  <TextExpression\.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">).*
+(?=    <\/sco:Collection>
+  <\/TextExpression\.NamespacesForImplementation>)
