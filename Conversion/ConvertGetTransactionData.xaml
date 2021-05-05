@@ -1,13 +1,14 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="ConvertGetTransactionData" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_projectFolderPath" Type="InArgument(x:String)" />
-    <x:Property Name="in_dataType" Type="InArgument(x:String)" />
     <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_transactionDataType" Type="InArgument(x:String)" />
+    <x:Property Name="in_transactionItemDataType" Type="InArgument(x:String)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1276.8,2024</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1277.6,2194.4</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ConvertGetTransactionData_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="50">
@@ -37,10 +38,12 @@
       <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
       <x:String>System.Collections.ObjectModel</x:String>
       <x:String>System.Text.RegularExpressions</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="26">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="52">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -59,7 +62,6 @@
       <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
       <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
       <AssemblyReference>System.ServiceModel</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
       <AssemblyReference>System.ValueTuple</AssemblyReference>
       <AssemblyReference>UiPath.Excel</AssemblyReference>
       <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
@@ -67,9 +69,11 @@
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
       <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Converts GetTransactionData workflow to use given data type&#xD;&#xA;&#xD;&#xA;Args: in_projectFolderPath, in_dataType, in_Config" DisplayName="ConvertGetTransactionData" sap:VirtualizedContainerService.HintSize="895.2,1959.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Converts GetTransactionData workflow to use given data type&#xA;&#xA;Args: in_projectFolderPath, in_transactionItemDataType, in_Config, in_transactionDataType" DisplayName="ConvertGetTransactionData" sap:VirtualizedContainerService.HintSize="895.2,2029.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="getTransDataXamlText" />
       <Variable x:TypeArguments="x:String" Name="queueItemCode" />
@@ -82,57 +86,57 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:ReadTextFile Content="[getTransDataXamlText]" DisplayName="Read Text File - Workflow" FileName="[Path.Combine(in_projectFolderPath, &quot;Framework\GetTransactionData.xaml&quot;)]" sap:VirtualizedContainerService.HintSize="853.6,80.8" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
-    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke AddNamespace workflow" sap:VirtualizedContainerService.HintSize="853.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Conversion\AddNamespace.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke AddNamespace workflow" sap:VirtualizedContainerService.HintSize="853.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Conversion\AddNamespace.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InOutArgument x:TypeArguments="x:String" x:Key="io_xamlText">
-          <mva:VisualBasicReference x:TypeArguments="x:String" ExpressionText="getTransDataXamlText" />
-        </InOutArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_dataType">
-          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_dataType" />
-        </InArgument>
-        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">
-          <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="in_Config" />
-        </InArgument>
+        <InOutArgument x:TypeArguments="x:String" x:Key="io_xamlText">[getTransDataXamlText]</InOutArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_dataType">[in_transactionItemDataType]</InArgument>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke ConvertDataType workflow" sap:VirtualizedContainerService.HintSize="853.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Conversion\ConvertDataType.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke ConvertDataType workflow" sap:VirtualizedContainerService.HintSize="853.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Conversion\ConvertDataType.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InOutArgument x:TypeArguments="x:String" x:Key="io_xamlText">
-          <mva:VisualBasicReference x:TypeArguments="x:String" ExpressionText="getTransDataXamlText" />
-        </InOutArgument>
-        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">
-          <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="in_Config" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_originalDataType">
-          <Literal x:TypeArguments="x:String">QueueItem</Literal>
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_newDataType">
-          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_dataType" />
-        </InArgument>
+        <InOutArgument x:TypeArguments="x:String" x:Key="io_xamlText">[getTransDataXamlText]</InOutArgument>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_originalDataType">QueueItem</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_newDataType">[in_transactionItemDataType]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <If sap2010:Annotation.AnnotationText="If the data type is not a DataRow, change the TransactionData argument to an array of the given data type" Condition="[in_dataType &lt;&gt; &quot;DataRow&quot;]" DisplayName="If - DataType not DataRow" sap:VirtualizedContainerService.HintSize="853.6,307.2" sap2010:WorkflowViewState.IdRef="If_1">
+    <Switch x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="If TransactionData type is Array or List, convert TransactionData argument to Array/List of given TransactionItem data type" DisplayName="Switch - TransactionData type" Expression="[in_transactionDataType]" sap:VirtualizedContainerService.HintSize="853.6,368" sap2010:WorkflowViewState.IdRef="Switch`1_2">
+      <Switch.Default>
+        <ui:Comment sap:VirtualizedContainerService.HintSize="333.6,75.2" sap2010:WorkflowViewState.IdRef="Comment_1" Text="// If TransactionData type is not Array or List, no changes are needed" />
+      </Switch.Default>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <If.Then>
-        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke ConvertTransactionDataToArray workflow" sap:VirtualizedContainerService.HintSize="363.2,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Conversion\ConvertTransactionDataToArray.xaml">
-          <ui:InvokeWorkflowFile.Arguments>
-            <InArgument x:TypeArguments="x:String" x:Key="in_dataType">
-              <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_dataType" />
-            </InArgument>
-            <InOutArgument x:TypeArguments="x:String" x:Key="io_xamlText">
-              <mva:VisualBasicReference x:TypeArguments="x:String" ExpressionText="getTransDataXamlText" />
-            </InOutArgument>
-            <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">
-              <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="in_Config" />
-            </InArgument>
-          </ui:InvokeWorkflowFile.Arguments>
-        </ui:InvokeWorkflowFile>
-      </If.Then>
-    </If>
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" x:Key="Array" DisplayName="Invoke ConvertTransactionDataToArray workflow" sap:VirtualizedContainerService.HintSize="363.2,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Conversion\ConvertTransactionDataToArray.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <InOutArgument x:TypeArguments="x:String" x:Key="io_xamlText">
+            <mva:VisualBasicReference x:TypeArguments="x:String" ExpressionText="getTransDataXamlText" />
+          </InOutArgument>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">
+            <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="in_Config" />
+          </InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_transactionItemDataType">
+            <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_transactionItemDataType" />
+          </InArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+      </ui:InvokeWorkflowFile>
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" x:Key="List" DisplayName="Invoke ConvertTransactionDataToList workflow" sap:VirtualizedContainerService.HintSize="352.8,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Conversion\ConvertTransactionDataToList.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <InOutArgument x:TypeArguments="x:String" x:Key="io_xamlText">
+            <mva:VisualBasicReference x:TypeArguments="x:String" ExpressionText="getTransDataXamlText" />
+          </InOutArgument>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">
+            <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="in_Config" />
+          </InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_transactionItemDataType">
+            <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_transactionItemDataType" />
+          </InArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+      </ui:InvokeWorkflowFile>
+    </Switch>
     <ui:ReadTextFile sap2010:Annotation.AnnotationText="Get original code for pulling queue item" Content="[queueItemCode]" DisplayName="Read Text File - Queue Item XAML code" FileName="XAMLSnippets\GetTransactionData_QueueItem.txt" sap:VirtualizedContainerService.HintSize="853.6,112" sap2010:WorkflowViewState.IdRef="ReadTextFile_2">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -140,7 +144,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:ReadTextFile>
-    <If sap2010:Annotation.AnnotationText="If data type is DataRow, use code for getting transaction item from DataTable. Otherwise, use generic code for getting transaction item from an array" Condition="[in_dataType = &quot;DataRow&quot;]" DisplayName="If - Data type is DataRow" sap:VirtualizedContainerService.HintSize="853.6,542.4" sap2010:WorkflowViewState.IdRef="If_2">
+    <If sap2010:Annotation.AnnotationText="If data type is DataRow, use code for getting transaction item from DataTable. Otherwise, use generic code for getting transaction item from an array" Condition="[in_transactionItemDataType = &quot;DataRow&quot;]" DisplayName="If - Data type is DataRow" sap:VirtualizedContainerService.HintSize="853.6,552" sap2010:WorkflowViewState.IdRef="If_2">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
@@ -174,7 +178,7 @@
               <OutArgument x:TypeArguments="x:String">[newDataTypeCode]</OutArgument>
             </Assign.To>
             <Assign.Value>
-              <InArgument x:TypeArguments="x:String">[newDataTypeCode.Replace("&lt;T&gt;", in_Config(in_dataType).toString)]</InArgument>
+              <InArgument x:TypeArguments="x:String">[newDataTypeCode.Replace("&lt;T&gt;", in_Config(in_transactionItemDataType).toString)]</InArgument>
             </Assign.Value>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">

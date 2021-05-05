@@ -1,13 +1,13 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="ConvertSetTransactionStatus" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_projectFolderPath" Type="InArgument(x:String)" />
-    <x:Property Name="in_dataType" Type="InArgument(x:String)" />
     <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_transactionItemDataType" Type="InArgument(x:String)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1276.8,1699.2</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1277.6,1815.2</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ConvertSetTransactionStatus_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="25">
@@ -61,7 +61,7 @@
       <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Converts SetTransactionStatus workflow to use given data type&#xA;&#xA;Args: in_projectFolderPath, in_dataType, in_Config" DisplayName="ConvertSetTransactionStatus" sap:VirtualizedContainerService.HintSize="425.6,1634.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Converts SetTransactionStatus workflow to use given TransactionItem data type&#xA;&#xA;Args: in_projectFolderPath, in_transactionItemDataType, in_Config" DisplayName="ConvertSetTransactionStatus" sap:VirtualizedContainerService.HintSize="425.6,1650.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="setTransStatusXamlText" />
       <Variable x:TypeArguments="x:String" Name="successCode" />
@@ -75,27 +75,19 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:ReadTextFile Content="[setTransStatusXamlText]" DisplayName="Read Text File - Workflow" FileName="[Path.Combine(in_projectFolderPath, &quot;Framework\SetTransactionStatus.xaml&quot;)]" sap:VirtualizedContainerService.HintSize="384,80.8" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
-    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke AddNamespace workflow" sap:VirtualizedContainerService.HintSize="384,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Conversion\AddNamespace.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke AddNamespace workflow" sap:VirtualizedContainerService.HintSize="384,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Conversion\AddNamespace.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InOutArgument x:TypeArguments="x:String" x:Key="io_xamlText">[setTransStatusXamlText]</InOutArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_dataType">[in_dataType]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_dataType">[in_transactionItemDataType]</InArgument>
         <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke ConvertDataType workflow" sap:VirtualizedContainerService.HintSize="384,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Conversion\ConvertDataType.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke ConvertDataType workflow" sap:VirtualizedContainerService.HintSize="384,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Conversion\ConvertDataType.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InOutArgument x:TypeArguments="x:String" x:Key="io_xamlText">
-          <mva:VisualBasicReference x:TypeArguments="x:String" ExpressionText="setTransStatusXamlText" />
-        </InOutArgument>
-        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">
-          <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="in_Config" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_originalDataType">
-          <Literal x:TypeArguments="x:String">QueueItem</Literal>
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_newDataType">
-          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_dataType" />
-        </InArgument>
+        <InOutArgument x:TypeArguments="x:String" x:Key="io_xamlText">[setTransStatusXamlText]</InOutArgument>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_originalDataType">QueueItem</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_newDataType">[in_transactionItemDataType]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
     <ui:ReadTextFile sap2010:Annotation.AnnotationText="Get code for setting queue item status to success" Content="[successCode]" DisplayName="Read Text File - Queue Item success XAML code" FileName="XAMLSnippets\SetTransactionStatus_QueueItemSuccess.txt" sap:VirtualizedContainerService.HintSize="384,112" sap2010:WorkflowViewState.IdRef="ReadTextFile_2">

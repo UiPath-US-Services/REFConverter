@@ -1,0 +1,1 @@
+xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"

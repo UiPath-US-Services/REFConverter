@@ -3,8 +3,8 @@
   "description": "Converts REFramework to user-selected data type",
   "main": "Main.xaml",
   "dependencies": {
-    "UiPath.Excel.Activities": "[2.9.5]",
-    "UiPath.System.Activities": "20.10.3"
+    "UiPath.Excel.Activities": "[2.10.4]",
+    "UiPath.System.Activities": "21.4.0"
   },
   "webServices": [],
   "entitiesStores": [],
@@ -48,5 +48,6 @@
   ],
   "isTemplate": false,
   "templateProjectData": {},
-  "publishData": {}
+  "publishData": {},
+  "targetFramework": "Legacy"
 }
